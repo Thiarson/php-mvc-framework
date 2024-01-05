@@ -5,7 +5,10 @@
     "autoload": {
         "psr-4": {
             "Thiarson\\Framework\\": "./"
-        }
+        },
+        "files": [
+            "routes/routes.php"
+        ]
     },
     "authors": [
         {
