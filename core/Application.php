@@ -10,7 +10,7 @@
      * 
      * @var Router
      */
-    public Router $router;
+    protected Router $router;
 
     public function __construct() {
       $this->router = new Router();

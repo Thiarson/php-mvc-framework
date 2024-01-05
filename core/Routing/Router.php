@@ -12,7 +12,7 @@
      *
      * @var Request
      */
-    public Request $request;
+    protected Request $request;
 
     public function __construct() {
       $this->request = new Request();
