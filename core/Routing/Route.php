@@ -14,7 +14,7 @@
      * Register a new GET route.
      *
      * @param  string  $path
-     * @param  array|string  $action
+     * @param  string|array|function  $action
      */
     public static function get(string $path, $action) {
       self::$routes['GET'][$path] = $action;
@@ -24,7 +24,7 @@
      * Register a new POST route.
      *
      * @param  string  $path
-     * @param  array|string  $action
+     * @param  string|array|function $action
      */
     public static function post(string $path, $action) {
       self::$routes['POST'][$path] = $action;
