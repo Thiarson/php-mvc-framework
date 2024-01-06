@@ -1,6 +1,6 @@
 <?php
 
-  namespace Thiarson\Framework\controller;
+  namespace Controller;
 
   class Home {
     public function landing() {

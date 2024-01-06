@@ -1,6 +1,6 @@
 <?php
 
-  namespace Thiarson\Framework\core\Http;
+  namespace Thiarson\Framework\Http;
 
   class Request {
     /**

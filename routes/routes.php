@@ -1,6 +1,6 @@
 <?php
 
-  use Thiarson\Framework\core\Routing\Route;
+  use Thiarson\Framework\Routing\Route;
 
   // We register here all the routes for the application.
 

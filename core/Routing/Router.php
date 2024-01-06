@@ -1,11 +1,11 @@
 <?php
 
-  namespace Thiarson\Framework\core\Routing;
+  namespace Thiarson\Framework\Routing;
 
-  use Thiarson\Framework\core\Http\Request;
+  use Thiarson\Framework\Http\Request;
 
   class Router {
-    protected const CONTROLLER_NAMESPACE = "Thiarson\Framework\controller\\";
+    protected const CONTROLLER_NAMESPACE = "Controller\\";
 
     /**
      * Instance of the current request.

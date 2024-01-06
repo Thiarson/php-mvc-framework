@@ -1,6 +1,6 @@
 <?php
 
-  use Thiarson\Framework\core\Application;
+  use Thiarson\Framework\Application;
 
   // We use the loader provide by composer, so we don't need to manually load our classes.
 

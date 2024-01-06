@@ -1,8 +1,8 @@
 <?php
 
-  namespace Thiarson\Framework\core;
+  namespace Thiarson\Framework;
 
-  use Thiarson\Framework\core\Routing\Router;
+  use Thiarson\Framework\Routing\Router;
 
   class Application {
     /**

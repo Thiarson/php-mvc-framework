@@ -1,6 +1,6 @@
 <?php
 
-  namespace Thiarson\Framework\core\Routing;
+  namespace Thiarson\Framework\Routing;
 
   class Route {
     /**
