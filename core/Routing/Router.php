@@ -5,6 +5,11 @@
   use Thiarson\Framework\Http\Request;
 
   class Router {
+    /**
+     * Namespace of every controller.
+     * 
+     * @var string
+     */
     protected const CONTROLLER_NAMESPACE = "Controller\\";
 
     /**
@@ -44,7 +49,7 @@
      */
     public function getController(string $action) {
       $action = explode('.', $action);
-      $controller = self::CONTROLLER_NAMESPACE."$action[0]";
+      $controller = self::CONTROLLER_NAMESPACE."$action[0]Controller";
       $method = $action[1];
       $controller = new $controller();
 
