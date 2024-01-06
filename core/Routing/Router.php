@@ -24,7 +24,7 @@
     public function resolve() {
       $path = $this->request->getPath();
       $method = $this->request->getMethod();
-      $action = Route::$routes[$method][$path] ?? null;
+      $action = Route::getAction($method, $path);
 
       if ($action === null) {
         throw new \Exception('404 Not found');

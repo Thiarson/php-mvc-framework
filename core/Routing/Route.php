@@ -29,4 +29,15 @@
     public static function post(string $path, $action) {
       self::$routes['POST'][$path] = $action;
     }
+
+    /**
+     * Get the action that match with the path.
+     *
+     * @param  string  $method
+     * @param  string  $path
+     * @return  string|array|function  $action
+     */
+    public static function getAction(string $method, string $path) {
+      return self::$routes[$method][$path] ?? null;
+    }
   }
