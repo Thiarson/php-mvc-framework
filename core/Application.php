@@ -6,13 +6,21 @@
 
   class Application {
     /**
+     * Will contain the configuration of our environnement.
+     * 
+     * @var array
+     */
+    public static array $config;
+
+    /**
      * Instance of a router.
      * 
      * @var Router
      */
     protected Router $router;
 
-    public function __construct() {
+    public function __construct(array $config) {
+      self::$config = $config;
       $this->router = new Router();
     }
 
