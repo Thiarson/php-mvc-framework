@@ -2,6 +2,7 @@
 
   namespace Thiarson\Framework\Routing;
 
+  use Thiarson\Framework\Exceptions\NotFoundException;
   use Thiarson\Framework\Http\Request;
 
   class Router {
@@ -32,7 +33,7 @@
       $action = Route::getAction($method, $path);
 
       if ($action === null) {
-        throw new \Exception('404 Not found');
+        throw new NotFoundException();
       }
       else if (is_string($action)) {
         $action = $this->getController($action);
