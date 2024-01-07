@@ -2,7 +2,9 @@
 
   namespace Thiarson\Framework;
 
+  use Thiarson\Framework\Http\Response;
   use Thiarson\Framework\Routing\Router;
+  use Thiarson\Framework\View\View;
 
   class Application {
     /**
@@ -28,6 +30,15 @@
      *  Initialize the application and resolve the current path.
      */
     public function run() {
-      $this->router->resolve();
+      try {
+        $this->router->resolve();
+      }
+      catch (\Exception $e) {
+        $response = new Response();
+        $view = new View();
+
+        $response->setStatusCode($e->getCode());
+        $view->render('error.notfound');
+      }
     }
   }
