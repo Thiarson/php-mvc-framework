@@ -38,7 +38,7 @@
         $view = new View();
 
         $response->setStatusCode($e->getCode());
-        $view->render('error.notfound');
+        $view->render('error', ['exception' => $e]);
       }
     }
   }

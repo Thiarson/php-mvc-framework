@@ -70,11 +70,19 @@
       }
 
       $view = explode('.', $view);
-      $folder = $view[0];
-      $view = $view[1];
+
+      if (sizeof($view) === 1) {
+        $view = '/'.$view[0].'.php';
+      }
+      else {
+        $folder = $view[0];
+        $view = $view[1];
+
+        $view = "/$folder/$view.php";
+      }
 
       ob_start();
-      include_once $this->viewsPath."/$folder/$view.php";
+      include_once $this->viewsPath.$view;
       return ob_get_clean();
     }
   }
