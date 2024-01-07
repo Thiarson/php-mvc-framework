@@ -4,7 +4,7 @@
 
   use Thiarson\Framework\Http\Response;
   use Thiarson\Framework\Routing\Router;
-  use Thiarson\Framework\View\View;
+  use Thiarson\Framework\Views\View;
 
   class Application {
     /**
@@ -35,7 +35,7 @@
       }
       catch (\Exception $e) {
         $response = new Response();
-        $view = new View();
+        $view = new View('auth');
 
         $response->setStatusCode($e->getCode());
         $view->render('error', ['exception' => $e]);
