@@ -19,7 +19,7 @@
      */
     protected string $layout;
 
-    public function __construct(string $layout) {
+    public function __construct(string $layout = 'default') {
       $this->viewsPath = Application::$config['viewsPath'];
       $this->layout = $layout;
     }
@@ -35,6 +35,15 @@
       $layoutContent = $this->layout();
 
       echo str_replace('{{content}}', $viewContent, $layoutContent);
+    }
+
+    /**
+     * Change the layout of the view
+     * 
+     * @param string $layout
+     */
+    public function setLayout(string $layout) {
+      $this->layout = $layout;
     }
 
     /**
