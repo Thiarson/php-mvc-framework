@@ -29,13 +29,12 @@
      * 
      * @param $view
      * @param array $params
-     * @return array|string
      */
     public function render($view, array $params = []) {
       $viewContent = $this->renderView($view, $params);
       $layoutContent = $this->layout();
 
-      return str_replace('{{content}}', $viewContent, $layoutContent);
+      echo str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
     /**

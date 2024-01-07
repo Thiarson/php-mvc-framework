@@ -14,6 +14,6 @@
      */
     public function render($view, array $params = [], string $layout = 'default') {
       $views = new View($layout);
-      echo $views->render($view, $params);
+      $views->render($view, $params);
     }
   }
