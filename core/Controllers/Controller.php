@@ -1,8 +1,8 @@
 <?php
 
-  namespace Thiarson\Framework\Controller;
+  namespace Thiarson\Framework\Controllers;
 
-  use Thiarson\Framework\View\View;
+  use Thiarson\Framework\Views\View;
 
   class Controller {
     /**

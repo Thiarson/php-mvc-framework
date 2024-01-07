@@ -11,7 +11,7 @@
      * 
      * @var string
      */
-    protected const CONTROLLER_NAMESPACE = "Controller\\";
+    protected const CONTROLLER_NAMESPACE = "Controllers\\";
 
     /**
      * Instance of the current request.
