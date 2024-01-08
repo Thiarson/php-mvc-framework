@@ -6,13 +6,6 @@
 
   class View {
     /**
-     * Path to the views folder.
-     * 
-     * @var string
-     */
-    protected string $viewsPath;
-
-    /**
      * Layout that the view will use.
      * 
      * @var string
@@ -20,7 +13,6 @@
     protected string $layout;
 
     public function __construct(string $layout = 'default') {
-      $this->viewsPath = Application::$config['viewsPath'];
       $this->layout = $layout;
     }
 
@@ -49,11 +41,14 @@
     /**
      * Get and return the content of the file in the specified layout.
      */
-    protected function layout() {
-      $layout = $this->layout;
+    protected function layout($layoutPath = null) {
+      // $layout = $this->layout;
+      $layoutPath = $layoutPath !== null ? $layoutPath : Application::$config['layoutsPath'];
+      $layout = $layoutPath.'/'.$this->layout.'.php';
 
       ob_start();
-      include_once $this->viewsPath."/layouts/$layout.php";
+      // include_once $this->viewsPath."/layouts/$layout.php";
+      include_once $layout;
       return ob_get_clean();
     }
 
@@ -64,7 +59,7 @@
      * @param array $params
      * @return string|false
      */
-    protected function renderView($view, array $params) {
+    protected function renderView($view, array $params, $viewPath = null) {
       foreach ($params as $key => $value) {
         $$key = $value;
       }
@@ -81,8 +76,11 @@
         $view = "/$folder/$view.php";
       }
 
+      $viewPath = $viewPath !== null ? $viewPath : Application::$config['viewsPath'];
+
       ob_start();
-      include_once $this->viewsPath.$view;
+      // include_once $this->viewsPath.$view;
+      include_once $viewPath.$view;
       return ob_get_clean();
     }
 
