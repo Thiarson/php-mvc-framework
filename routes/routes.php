@@ -1,10 +1,17 @@
 <?php
 
+  use Thiarson\Framework\Application;
   use Thiarson\Framework\Routing\Route;
+  use Thiarson\Framework\Views\View;
 
   // We register here all the routes for the application.
 
-  Route::get('/', 'home.landing');
-  Route::get('/home', function () {
-    echo 'Home';
+  Route::get('/', function () {
+    View::view('Landing');
   });
+
+  Route::get('/login', 'auth.login');
+  Route::post('/login', 'auth.login');
+  Route::get('/logout', 'auth.logout');
+
+  Route::get('/home', 'home.index');

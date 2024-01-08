@@ -1,5 +1,3 @@
-<?php use Thiarson\Framework\Application; ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,12 +8,7 @@
 <body>
   <div>
     <ul>
-      <?php
-        if (Application::isGuest())
-          echo '<li><a href="/login">Login</a></li>';
-        else
-          echo '<li><a href="/logout">Logout</a></li>';
-      ?>
+      <li><a href="/">Landing</a></li>
     </ul>
   </div>
   <div>{{content}}</div>
