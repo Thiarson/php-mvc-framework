@@ -2,10 +2,9 @@
 
   namespace Thiarson\Framework;
 
-  use Thiarson\Framework\Http\Response;
   use Thiarson\Framework\Routing\Router;
   use Thiarson\Framework\Session\Session;
-  use Thiarson\Framework\Views\View;
+  use Thiarson\Framework\Views\ErrorView;
 
   class Application {
     /**
@@ -43,11 +42,8 @@
         $this->router->resolve();
       }
       catch (\Exception $e) {
-        $response = new Response();
-        $view = new View('auth');
-
-        $response->setStatusCode($e->getCode());
-        $view->render('error', ['exception' => $e]);
+        $view = new ErrorView($e);
+        $view->render();
       }
     }
   }
