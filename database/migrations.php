@@ -1,7 +1,7 @@
 <?php
 
-use Thiarson\Framework\Application;
-use Thiarson\Framework\Database\Database;
+  use Thiarson\Framework\Application;
+  use Thiarson\Framework\Database\Database;
 
   require __DIR__.'/../vendor/autoload.php';
   $config = require __DIR__.'/../config/app.php';
