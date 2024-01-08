@@ -8,7 +8,7 @@
      *
      * @var array
      */
-    public static array $routes = [];
+    protected static array $routes = [];
 
     /**
      * Register a new GET route.

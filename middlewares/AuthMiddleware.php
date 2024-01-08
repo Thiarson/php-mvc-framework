@@ -9,7 +9,7 @@
   use Thiarson\Framework\Routing\Route;
 
   class AuthMiddleware extends Middleware {
-    public array $actions = [];
+    protected array $actions = [];
       
     public function __construct(array $actions = []) {
       $this->actions = $actions;
@@ -20,7 +20,7 @@
         $request = new Request();
         $path = $request->getPath();
         $method = $request->getMethod();
-        $action = Route::$routes[$method][$path];
+        $action = Route::getAction($method, $path);
 
         // If actions is empty, then the middleware works for all the actions
         if (empty($this->actions) || in_array($action, $this->actions)) {
