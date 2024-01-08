@@ -4,6 +4,7 @@
 
   use Thiarson\Framework\Exceptions\NotFoundException;
   use Thiarson\Framework\Http\Request;
+  use Thiarson\Framework\Http\Response;
 
   class Router {
     /**
@@ -20,8 +21,16 @@
      */
     protected Request $request;
 
+    /**
+     * Instance of the current response.
+     *
+     * @var Response
+     */
+    protected Response $response;
+
     public function __construct() {
       $this->request = new Request();
+      $this->response = new Response();
     }
 
     /**
@@ -39,7 +48,7 @@
         $action = $this->getController($action);
       }
 
-      call_user_func_array($action, []);
+      call_user_func($action, $this->request, $this->response);
     }
 
     /**
