@@ -21,7 +21,14 @@
      * 
      * @var Session
      */
-    protected static Session $session;
+    public static Session $session;
+
+    /**
+     * Contain all the informations about the user loged in.
+     * 
+     * @var UserModel
+     */
+    public static ?UserModel $user;
 
     /**
      * Instance of a router.
@@ -29,13 +36,6 @@
      * @var Router
      */
     protected Router $router;
-    
-    /**
-     * Contain all the informations about the user loged in.
-     * 
-     * @var UserModel
-     */
-    protected static ?UserModel $user;
 
     public function __construct(array $config) {
       self::$config = $config;
@@ -68,43 +68,5 @@
         $response->setStatusCode($e->getCode());
         $view->render('error', ['exception' => $e]);
       }
-    }
-
-    /**
-     * Set the user in the session.
-     * 
-     * @param UserModel $user
-     * @return bool
-     */
-    public static function login(UserModel $user) {
-      self::$user = $user;
-      $primaryKey = $user->primaryKey();
-      $primaryValue = $user->{$primaryKey};
-      self::$session->set('user', $primaryValue);
-
-      return true;
-    }
-
-    /**
-     * Remove the user in the session and logout.
-     * 
-     * @return void
-     */
-    public static function logout() {
-      self::$user = null;
-      // self::$session->remove('user');
-      session_destroy();
-      header('Location: /');
-
-      return;
-    }
-
-    /**
-     * Check if any user is loged in.
-     * 
-     * @return bool
-     */
-    public static function isGuest() {
-      return !self::$user;
     }
   }

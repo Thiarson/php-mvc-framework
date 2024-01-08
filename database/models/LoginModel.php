@@ -37,6 +37,24 @@
         return false;
       }
 
-      return Application::login($user);
+      Application::$user = $user;
+      $primaryKey = $user->primaryKey();
+      $primaryValue = $user->{$primaryKey};
+      Application::$session->set('user', $primaryValue);
+
+      return true;
+    }
+
+    public static function logout() {
+      Application::$user = null;
+      // self::$session->remove('user');
+      session_destroy();
+      header('Location: /');
+
+      return;
+    }
+
+    public static function isGuest() {
+      return !Application::$user;
     }
   }

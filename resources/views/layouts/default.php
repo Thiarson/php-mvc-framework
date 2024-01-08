@@ -1,4 +1,4 @@
-<?php use Thiarson\Framework\Application; ?>
+<?php use Database\Models\LoginModel; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,7 @@
   <div>
     <ul>
       <?php
-        if (Application::isGuest())
+        if (LoginModel::isGuest())
           echo '<li><a href="/login">Login</a></li>';
         else
           echo '<li><a href="/logout">Logout</a></li>';

@@ -3,7 +3,6 @@
   namespace Controllers;
 
   use Database\Models\LoginModel;
-  use Thiarson\Framework\Application;
   use Thiarson\Framework\Controllers\Controller;
   use Thiarson\Framework\Http\Request;
   use Thiarson\Framework\Http\Response;
@@ -27,6 +26,6 @@
     }
 
     public function logout() {
-      Application::logout();
+      LoginModel::logout();
     }
   }
