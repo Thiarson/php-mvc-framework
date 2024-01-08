@@ -1,6 +1,5 @@
 <?php
 
-  use Thiarson\Framework\Application;
   use Thiarson\Framework\Routing\Route;
   use Thiarson\Framework\Views\View;
 
