@@ -28,10 +28,12 @@
     /**
      * Add new middleware.
      * 
-     * @param Middleware $middleware
+     * @param Middleware[] $middleware
      */
-    public function registerMiddleware(Middleware $middleware) {
-      $this->middlewares[] = $middleware;
+    public function registerMiddleware(array $middlewares = []) {
+      foreach ($middlewares as $middleware) {
+        $this->middlewares[] = $middleware;
+      }
     }
 
     /**

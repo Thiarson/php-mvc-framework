@@ -2,7 +2,6 @@
 
   namespace Thiarson\Framework;
 
-  use Database\Models\UserModel;
   use Thiarson\Framework\Http\Response;
   use Thiarson\Framework\Routing\Router;
   use Thiarson\Framework\Session\Session;
@@ -24,13 +23,6 @@
     public static Session $session;
 
     /**
-     * Contain all the informations about the user loged in.
-     * 
-     * @var UserModel
-     */
-    public static ?UserModel $user;
-
-    /**
      * Instance of a router.
      * 
      * @var Router
@@ -41,17 +33,6 @@
       self::$config = $config;
       self::$session = new Session();
       $this->router = new Router();
-
-      $primaryValue = self::$session->get('user');
-
-      if ($primaryValue) {
-        $user = new UserModel();
-        $primaryKey = $user->primaryKey();
-        self::$user = $user->findOne([$primaryKey => $primaryValue]);
-      }
-      else {
-        self::$user = null;
-      }
     }
 
     /**
