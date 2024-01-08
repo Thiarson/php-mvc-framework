@@ -46,6 +46,11 @@
       }
       else if (is_string($action)) {
         $action = $this->getController($action);
+        $controller = $action[0];
+        
+        foreach ($controller->getMiddlewares() as $middleware) {
+          $middleware->execute();
+        }
       }
 
       call_user_func($action, $this->request, $this->response);

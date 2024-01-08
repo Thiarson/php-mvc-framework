@@ -1,0 +1,31 @@
+<?php
+
+  namespace Middlewares;
+
+  use Database\Models\LoginModel;
+  use Thiarson\Framework\Exceptions\ForbiddenException;
+  use Thiarson\Framework\Http\Request;
+  use Thiarson\Framework\Middlewares\Middleware;
+  use Thiarson\Framework\Routing\Route;
+
+  class AuthMiddleware extends Middleware {
+    public array $actions = [];
+      
+    public function __construct(array $actions = []) {
+      $this->actions = $actions;
+    }
+
+    public function execute() {
+      if (LoginModel::isGuest()) {
+        $request = new Request();
+        $path = $request->getPath();
+        $method = $request->getMethod();
+        $action = Route::$routes[$method][$path];
+
+        // If actions is empty, then the middleware works for all the actions
+        if (empty($this->actions) || in_array($action, $this->actions)) {
+          throw new ForbiddenException();
+        }
+      }
+    }
+  }
