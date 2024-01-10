@@ -6,8 +6,8 @@
 
   $form = Form::begin('post', '');
 
-  echo $form->field($model, 'email')->emailField();
-  echo $form->field($model, 'password')->passwordField();
+  $form->field($model, 'email')->emailField();
+  $form->field($model, 'password')->passwordField();
 
   Form::end('Se connecter');
 

@@ -37,7 +37,7 @@
         return false;
       }
 
-      Application::$session->set('user',$user->name);
+      Application::$session->set('user', $user->name);
 
       return true;
     }

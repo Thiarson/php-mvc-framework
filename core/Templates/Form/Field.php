@@ -31,8 +31,8 @@
       $this->attribute = $attribute;
     }
 
-    public function __toString() {
-      return sprintf('
+    public function render() {
+      echo sprintf('
         <div>
           <label>%s </label>
           %s

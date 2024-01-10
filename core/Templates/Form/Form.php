@@ -38,6 +38,9 @@
      * @return InputField
      */
     public function field(Model $model, $attribute) {
-      return new InputField($model, $attribute);
+      $input = new InputField($model, $attribute);
+      $input->render();
+
+      return $input;
     }
   }

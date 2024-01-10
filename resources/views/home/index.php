@@ -1,2 +1,4 @@
+<?php use Thiarson\Framework\Application; ?>
+
 <h1>Home</h1>
-<p>Bienvenue <?= $name ?></p>
+<p>Bienvenue <?= Application::$session->get('user') ?></p>
