@@ -10,13 +10,19 @@
 
   class AuthMiddleware extends Middleware {
     protected array $actions = [];
-      
-    public function __construct(array $actions = []) {
+    protected bool $isLogged;
+
+    /**
+     * 
+     * @param bool $isLogged Filter when the middleware must be executed
+     */
+    public function __construct(array $actions = [], bool $isLogged) {
       $this->actions = $actions;
+      $this->isLogged = $isLogged;
     }
 
     public function execute() {
-      if (!LoginModel::isLogged()) {
+      if ((!$this->isLogged && !LoginModel::isLogged() || ($this->isLogged && LoginModel::isLogged()))) {
         $request = new Request();
         $path = $request->getPath();
         $method = $request->getMethod();

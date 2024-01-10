@@ -8,7 +8,7 @@
   class HomeController extends Controller {
     public function __construct() {
       $middlewares = [
-        new AuthMiddleware(['home.index']),
+        new AuthMiddleware(['home.index'], false),
       ];
       $this->registerMiddleware($middlewares);
     }

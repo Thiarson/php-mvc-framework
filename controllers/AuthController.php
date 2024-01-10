@@ -3,11 +3,19 @@
   namespace Controllers;
 
   use Database\Models\LoginModel;
-  use Thiarson\Framework\Controllers\Controller;
+use Middlewares\AuthMiddleware;
+use Thiarson\Framework\Controllers\Controller;
   use Thiarson\Framework\Http\Request;
   use Thiarson\Framework\Http\Response;
 
   class AuthController extends Controller {
+    public function __construct() {
+      $middlewares = [
+        new AuthMiddleware(['auth.login'], true),
+      ];
+      $this->registerMiddleware($middlewares);
+    }
+
     public function login(Request $request, Response $response) {
       $loginModel = new LoginModel;
       
