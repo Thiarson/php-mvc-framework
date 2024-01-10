@@ -85,15 +85,13 @@
     }
 
     /**
-     * Merge directly the content with the specified layout
+     * Render directly the view with the specified layout.
      * 
-     * @param string $content
+     * @param string $viewName
      * @param string $layout
      */
-    public static function view(string $content, string $layout = 'default') {
+    public static function view(string $viewName, string $layout = 'default') {
       $view = new View($layout);
-      $layoutContent = $view->layout();
-
-      echo str_replace('{{content}}', $content, $layoutContent);
+      $view->render($viewName);
     }
   }
