@@ -2,7 +2,7 @@
 
   namespace Database\Models;
 
-  use Thiarson\Framework\Database\DbModel;
+  use Thiarson\Framework\Database\Models\DbModel;
 
   class UserModel extends DbModel {
     public int $id = 0;

@@ -3,8 +3,8 @@
   namespace Controllers;
 
   use Database\Models\LoginModel;
-use Middlewares\AuthMiddleware;
-use Thiarson\Framework\Controllers\Controller;
+  use Middlewares\AuthMiddleware;
+  use Thiarson\Framework\Controllers\Controller;
   use Thiarson\Framework\Http\Request;
   use Thiarson\Framework\Http\Response;
 

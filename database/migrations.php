@@ -1,7 +1,7 @@
 <?php
 
   use Thiarson\Framework\Application;
-  use Thiarson\Framework\Database\Database;
+  use Thiarson\Framework\Database\Migrations\Migration;
 
   require __DIR__.'/../vendor/autoload.php';
   $config = require __DIR__.'/../config/app.php';
@@ -11,6 +11,6 @@
   
   // Execute and save all new migrations
   $app = new Application($config);
-  $db = Database::db();
+  $migration = new Migration();
 
-  $db->applyMigrations();
+  $migration->applyMigrations();

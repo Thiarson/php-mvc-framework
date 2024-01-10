@@ -1,6 +1,8 @@
 <?php
 
-  namespace Thiarson\Framework\Database;
+  namespace Thiarson\Framework\Database\Models;
+
+  use Thiarson\Framework\Database\Database;
 
   abstract class Model {
     // Rules that can be applied to each field.

@@ -3,7 +3,7 @@
   namespace Database\Models;
 
   use Thiarson\Framework\Application;
-  use Thiarson\Framework\Database\Model;
+  use Thiarson\Framework\Database\Models\Model;
 
   class LoginModel extends Model {
     public string $email = '';

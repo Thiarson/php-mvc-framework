@@ -2,7 +2,7 @@
 
   namespace Thiarson\Framework\Templates\Form;
 
-  use Thiarson\Framework\Database\Model;
+  use Thiarson\Framework\Database\Models\Model;
 
   abstract class Field {
     /**

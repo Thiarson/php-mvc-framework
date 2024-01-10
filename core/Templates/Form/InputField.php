@@ -2,7 +2,7 @@
 
   namespace Thiarson\Framework\Templates\Form;
 
-  use Thiarson\Framework\Database\Model;
+  use Thiarson\Framework\Database\Models\Model;
 
   class InputField extends Field {
     // All the possible type that the input can be.
