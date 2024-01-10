@@ -50,8 +50,8 @@
       return;
     }
 
-    public static function isGuest() {
+    public static function isLogged() {
       $session = Application::$session->get('user');
-      return !$session ? true : false;
+      return !$session ? false : true;
     }
   }

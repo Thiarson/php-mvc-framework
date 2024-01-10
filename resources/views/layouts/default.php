@@ -11,10 +11,10 @@
   <div>
     <ul>
       <?php
-        if (LoginModel::isGuest())
-          echo '<li><a href="/login">Login</a></li>';
-        else
+        if (LoginModel::isLogged())
           echo '<li><a href="/logout">Logout</a></li>';
+        else
+          echo '<li><a href="/login">Login</a></li>';
       ?>
     </ul>
   </div>

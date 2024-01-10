@@ -16,7 +16,7 @@
     }
 
     public function execute() {
-      if (LoginModel::isGuest()) {
+      if (!LoginModel::isLogged()) {
         $request = new Request();
         $path = $request->getPath();
         $method = $request->getMethod();
