@@ -2,8 +2,7 @@
 
   namespace Thiarson\Framework\Routing;
 
-use Thiarson\Framework\Controllers\FuncController;
-use Thiarson\Framework\Exceptions\NotFoundException;
+  use Thiarson\Framework\Exceptions\NotFoundException;
   use Thiarson\Framework\Http\Request;
   use Thiarson\Framework\Http\Response;
 
@@ -48,13 +47,10 @@ use Thiarson\Framework\Exceptions\NotFoundException;
       else if (is_string($action)) {
         $action = $this->getController($action);
         $controller = $action[0];
-      }
-      else {
-        $controller = new FuncController();
-      }
 
-      foreach ($controller->getMiddlewares() as $middleware) {
-        $middleware->execute();
+        foreach ($controller->getMiddlewares() as $middleware) {
+          $middleware->execute();
+        }
       }
 
       call_user_func($action, $this->request, $this->response);

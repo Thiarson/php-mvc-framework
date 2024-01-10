@@ -2,7 +2,6 @@
 
   namespace Database\Models;
 
-  use Middlewares\UserMiddleware;
   use Thiarson\Framework\Application;
   use Thiarson\Framework\Database\Model;
 
@@ -38,16 +37,12 @@
         return false;
       }
 
-      UserMiddleware::$user = $user;
-      $primaryKey = $user->primaryKey();
-      $primaryValue = $user->{$primaryKey};
-      Application::$session->set('user', $primaryValue);
+      Application::$session->set('user',$user->name);
 
       return true;
     }
 
     public static function logout() {
-      UserMiddleware::$user = null;
       // self::$session->remove('user');
       session_destroy();
       header('Location: /');
@@ -56,6 +51,7 @@
     }
 
     public static function isGuest() {
-      return !UserMiddleware::$user;
+      $session = Application::$session->get('user');
+      return !$session ? true : false;
     }
   }
