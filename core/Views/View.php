@@ -6,14 +6,14 @@
 
   class View {
     /**
-     * Layout that the view will use.
+     * Intance of the layout.
      * 
-     * @var string
+     * @var Layout
      */
-    protected string $layout;
+    protected Layout $layout;
 
     public function __construct(string $layout = 'default') {
-      $this->layout = $layout;
+      $this->layout = new Layout($layout);
     }
 
     /**
@@ -24,32 +24,9 @@
      */
     public function render($view, array $params = []) {
       $viewContent = $this->renderView($view, $params);
-      $layoutContent = $this->layout();
+      $layoutContent = $this->layout->renderLayout();
 
       echo str_replace('{{content}}', $viewContent, $layoutContent);
-    }
-
-    /**
-     * Change the layout of the view
-     * 
-     * @param string $layout
-     */
-    public function setLayout(string $layout) {
-      $this->layout = $layout;
-    }
-
-    /**
-     * Get and return the content of the file in the specified layout.
-     */
-    protected function layout($layoutPath = null) {
-      // $layout = $this->layout;
-      $layoutPath = $layoutPath !== null ? $layoutPath : Application::$config['layoutsPath'];
-      $layout = $layoutPath.'/'.$this->layout.'.layout.php';
-
-      ob_start();
-      // include_once $this->viewsPath."/layouts/$layout.php";
-      include_once $layout;
-      return ob_get_clean();
     }
 
     /**

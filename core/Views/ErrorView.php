@@ -20,7 +20,7 @@
 
     public function render($view = 'error', array $params = []) {
       $viewContent = $this->renderView($view, ['exception' => $this->exception], $this->templatePath);
-      $layoutContent = $this->layout($this->templatePath);
+      $layoutContent = $this->layout->renderLayout($this->templatePath);
 
       echo str_replace('{{content}}', $viewContent, $layoutContent);
     }
