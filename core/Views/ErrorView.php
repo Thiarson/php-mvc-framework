@@ -15,10 +15,10 @@
       $response->setStatusCode($e->getCode());
       $this->templatePath = Application::$config['rootDir'].'/core/Templates/Error';
 
-      parent::__construct('errorLayout');
+      parent::__construct('error');
     }
 
-    public function render($view = 'errorView', array $params = []) {
+    public function render($view = 'error', array $params = []) {
       $viewContent = $this->renderView($view, ['exception' => $this->exception], $this->templatePath);
       $layoutContent = $this->layout($this->templatePath);
 

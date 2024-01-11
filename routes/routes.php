@@ -6,7 +6,7 @@
   // We register here all the routes for the application.
 
   Route::get('/', function () {
-    View::view('Landing');
+    View::view('landing');
   });
 
   Route::get('/login', 'auth.login');

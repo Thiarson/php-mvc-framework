@@ -44,7 +44,7 @@
     protected function layout($layoutPath = null) {
       // $layout = $this->layout;
       $layoutPath = $layoutPath !== null ? $layoutPath : Application::$config['layoutsPath'];
-      $layout = $layoutPath.'/'.$this->layout.'.php';
+      $layout = $layoutPath.'/'.$this->layout.'.layout.php';
 
       ob_start();
       // include_once $this->viewsPath."/layouts/$layout.php";
@@ -67,13 +67,13 @@
       $view = explode('.', $view);
 
       if (sizeof($view) === 1) {
-        $view = '/'.$view[0].'.php';
+        $view = '/'.$view[0].'.view.php';
       }
       else {
         $folder = $view[0];
         $view = $view[1];
 
-        $view = "/$folder/$view.php";
+        $view = "/$folder/$view.view.php";
       }
 
       $viewPath = $viewPath !== null ? $viewPath : Application::$config['viewsPath'];
