@@ -20,11 +20,10 @@
 
     public function render($view = 'error', array $params = []) {
       $viewContent = $this->renderView($view, ['exception' => $this->exception], $this->templatePath);
-      $this->extends($viewContent);
-
+      $this->extractView($viewContent);
+      
+      $this->layout->setLayout($this->extends);
       $layoutContent = $this->layout->renderLayout($this->templatePath);
-
-      $this->extract($viewContent);
       $view = $this->replaceLayout($layoutContent);
 
       echo $view;
