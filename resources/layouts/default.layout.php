@@ -8,7 +8,7 @@
 <body>
   <div>
     <ul>
-      @if (LoginModel::isLogged())
+      @if isLogged()
         <li><a href="/logout">Logout</a></li>
       @else
         <li><a href="/login">Login</a></li>

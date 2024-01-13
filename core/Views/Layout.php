@@ -2,7 +2,7 @@
 
   namespace Thiarson\Framework\Views;
 
-use Thiarson\Framework\Application;
+  use Thiarson\Framework\Application;
 
   class Layout {
     /**
@@ -12,7 +12,7 @@ use Thiarson\Framework\Application;
      */
     protected string $layout;
 
-    public function __construct(string $layout) {
+    public function __construct(string $layout = 'default') {
       $this->layout = $layout;
     }
 
@@ -29,12 +29,12 @@ use Thiarson\Framework\Application;
      * Get and return the content of the file in the specified layout.
      */
     public function renderLayout($layoutPath = null) {
-      // $layout = $this->layout;
       $layoutPath = $layoutPath !== null ? $layoutPath : Application::$config['layoutsPath'];
       $layout = $layoutPath.'/'.$this->layout.'.layout.php';
 
+      /** Il faut d'abord vérifier si le fichier existe */
+
       ob_start();
-      // include_once $this->viewsPath."/layouts/$layout.php";
       include_once $layout;
       return ob_get_clean();
     }

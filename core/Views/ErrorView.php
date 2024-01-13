@@ -15,13 +15,18 @@
       $response->setStatusCode($e->getCode());
       $this->templatePath = Application::$config['rootDir'].'/core/Templates/Error';
 
-      parent::__construct('error');
+      parent::__construct();
     }
 
     public function render($view = 'error', array $params = []) {
       $viewContent = $this->renderView($view, ['exception' => $this->exception], $this->templatePath);
+      $this->extends($viewContent);
+
       $layoutContent = $this->layout->renderLayout($this->templatePath);
 
-      echo str_replace('{{content}}', $viewContent, $layoutContent);
+      $this->extract($viewContent);
+      $view = $this->replaceLayout($layoutContent);
+
+      echo $view;
     }
   }

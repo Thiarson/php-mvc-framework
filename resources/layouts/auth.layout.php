@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Framework</title>
+  <title>@show('title')</title>
 </head>
 <body>
   <div>
@@ -11,6 +11,8 @@
       <li><a href="/">Landing</a></li>
     </ul>
   </div>
-  <div>{{content}}</div>
+  <div>
+    @show('content')
+  </div>
 </body>
 </html>

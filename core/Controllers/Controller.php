@@ -18,10 +18,9 @@
      * 
      * @param $view
      * @param array $params
-     * @param string $layout
      */
-    public function render($view, array $params = [], string $layout = 'default') {
-      $views = new View($layout);
+    public function render($view, array $params = []) {
+      $views = new View();
       $views->render($view, $params);
     }
 

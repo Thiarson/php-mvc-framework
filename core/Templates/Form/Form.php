@@ -5,6 +5,12 @@
   use Thiarson\Framework\Database\Models\Model;
 
   class Form {
+    protected array $fields;
+
+    public function __construct() {
+      $this->fields = [];
+    }
+    
     /**
      * Set the begining of the form balise.
      * 
@@ -12,9 +18,8 @@
      * @param string $action
      * @return Form
      */
-    public static function begin(string $method, string $action) {
+    public function begin(string $method, string $action) {
       echo sprintf('<form method="%s" action="%s">', $method, $action);
-      return new Form();
     }
 
     /**
@@ -23,7 +28,11 @@
      * @param string $value
      * @param string $type
      */
-    public static function end( string $value = 'Submit', string $type = 'submit') {
+    public function end( string $value = 'Submit', string $type = 'submit') {
+      foreach ($this->fields as $field) {
+        $field->render();
+      }
+      
       echo sprintf('
         <input type="%s" value="%s"/>
         </form>
@@ -39,7 +48,7 @@
      */
     public function field(Model $model, $attribute) {
       $input = new InputField($model, $attribute);
-      $input->render();
+      $this->fields[] = $input;
 
       return $input;
     }

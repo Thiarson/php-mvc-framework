@@ -30,7 +30,7 @@
 
       $this->render('auth.login', [
         'model' => $loginModel,
-      ], 'auth');
+      ]);
     }
 
     public function logout() {

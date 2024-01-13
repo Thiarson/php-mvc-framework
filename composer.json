@@ -8,7 +8,8 @@
             "": "./"
         },
         "files": [
-            "routes/routes.php"
+            "routes/routes.php",
+            "config/view.php"
         ]
     },
     "authors": [

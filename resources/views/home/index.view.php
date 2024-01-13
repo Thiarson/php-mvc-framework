@@ -1,6 +1,6 @@
 @extends('default')
 
-@block('title', 'Framework')
+@block('title', 'Home')
 
 @block('content')
   <h1>Home</h1>

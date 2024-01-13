@@ -1,14 +1,17 @@
-<?php use Thiarson\Framework\Templates\Form\Form; ?>
+@extends('auth')
 
-<h1>Login</h1>
+@block('title', 'Login')
 
-<?php
+@block('content')
+  <h1>Login</h1>
+  <?php
+    use Thiarson\Framework\Templates\Form\Form;
 
-  $form = Form::begin('post', '');
+    $form = new Form('post', '');
 
-  $form->field($model, 'email')->emailField();
-  $form->field($model, 'password')->passwordField();
-
-  Form::end('Se connecter');
-
-?>
+    $form->begin('post', '');
+    $form->field($model, 'email')->emailField();
+    $form->field($model, 'password')->passwordField();
+    $form->end('Se connecter');
+  ?>
+@endblock
