@@ -4,5 +4,5 @@
 
 @block('content')
   <h1>Home</h1>
-  <p>Bienvenue {{ session('user') }}</p>
+  <p>Bienvenue {{name}}</p>
 @endblock

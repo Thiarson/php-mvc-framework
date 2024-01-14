@@ -13,9 +13,11 @@
     protected static array $regex = [
       'extends' => "@extends\('([\w]+)'\)",
       'block' => "@block\('([\w]+)', '([\w]+)'\)|@block\('([\w]+)'\)(.*)@endblock",
-      'bracket' => "{{(.*)}}",
       'show' => "@show\('([\w]+)'\)",
+      'loop' => "@for .*@endfor",
       'condition' => "@if .*@endif",
+      'bracket' => "{{(.*)}}",
+
     ];
 
     /**
@@ -61,6 +63,13 @@
     protected $condition;
 
     /**
+     * Contains all the loop statement.
+     * 
+     * @var mixed
+     */
+    protected $loop;
+
+    /**
      * Used in the replaceBracket() method as buffer.
      * 
      * @var mixed
@@ -72,6 +81,7 @@
       $this->extends = '';
       $this->viewMatch = [];
       $this->condition = null;
+      $this->loop = null;
       $this->temp = null;
     }
 
@@ -83,7 +93,7 @@
      */
     public function render($view, array $params = []) {
       $viewContent = $this->renderView($view, $params);
-      $this->extractView($viewContent);
+      $this->extractView($viewContent, $params);
       
       $this->layout->setLayout($this->extends);
       $layoutContent = $this->layout->renderLayout();
@@ -96,16 +106,17 @@
      * Get all the data in the view that need to be injected in the layout.
      * 
      * @param $viewContent
+     * @param array $params
      */
-    protected function extractView($viewContent) {
+    protected function extractView($viewContent, array $params) {
       $extendsRegex = self::$regex['extends'];
       $blockRegex = self::$regex['block'];
 
       if (preg_match_all("#$extendsRegex|$blockRegex#Us", $viewContent, $results, PREG_SET_ORDER)) {
         $this->clearResult($results);
-        $this->replaceBracket($this->viewMatch);
         $this->replaceCondition($this->viewMatch);
         $this->replaceLoop($this->viewMatch);
+        $this->replaceBracket($this->viewMatch, $params);
       }
     }
 
@@ -113,6 +124,7 @@
      * Replace all the tags by the data extracted in the view.
      * 
      * @param $layoutContent
+     * @return
      */
     protected function replaceLayout($layoutContent) {
       $showRegex = self::$regex['show'];
@@ -121,8 +133,8 @@
 
       $show = preg_replace_callback("#$showRegex|$conditionRegex|$bracketRegex#Us", function ($matches) {
         if (preg_match("#@if#", $matches[0])) {
-          $this->replaceBracket($matches);
           $this->replaceCondition($matches);
+          $this->replaceBracket($matches);
           return $matches[0];
         }
         else if (preg_match("#{{.*}}#U", $matches[0])) {
@@ -142,8 +154,9 @@
      * Replace the function or the variable in the bracket by the corresponding value.
      * 
      * @param array &$contents
+     * @param array $parameters = []
      */
-    protected function replaceBracket(array &$contents) {
+    protected function replaceBracket(array &$contents, array $parameters = []) {
       $bracketRegex = self::$regex['bracket'];
 
       foreach ($contents as $key => $value) {
@@ -163,22 +176,35 @@
             else {
               $global = explode('.', $valueTrimed);
 
-              if (sizeof($global) > 1) {
+              if (sizeof($global) === 1) {
+                $global = $global[0];
+
+                if (array_key_exists($global, self::$global)) {
+                  $this->temp = self::$global[$global];
+                }
+                else if (array_key_exists($global, $parameters)) {
+                  $this->temp = $parameters[$global];
+                }
+              }
+              else if (sizeof($global) === 2) {
                 $param = $global[1];
                 $global = $global[0];
                 $this->temp = self::$global[$global][$param];
               }
               else {
-                $global = $global[0];
-                $this->temp = self::$global[$global];
+                $param = trim($global[2]);
+                $globalIndex = trim($global[1]);
+                $global = trim($global[0]);
+                $this->temp = self::$global[$global][$globalIndex][$param];
               }
             }
 
             $replaced = preg_replace_callback("#$bracketRegex#U", function ($matches) {
               return $this->temp;
-            }, $value);
+            }, $value, 1);
 
             $contents[$key] = $replaced;
+            $value = $replaced;
           }
         }
       }
@@ -240,7 +266,58 @@
      * @param array &$contents
      */
     protected function replaceLoop(array &$contents) {
+      $loopRegex = self::$regex['loop'];
+      $forStatement = '@for (.*) in (.*)\n(.*)@endfor';
 
+      foreach ($contents as $key => $value) {
+        if (preg_match_all("#$loopRegex#Us", $value, $matches, PREG_SET_ORDER)) {
+          foreach ($matches as $match) {
+            if (preg_match("#$forStatement#Us", $match[0], $result)) {
+              $values = $result[2];
+
+              // Il y encore beaucoup de traitement plus complexe à faire !
+              if ($this->isFunction($values)) {
+                // Traitement...
+                echo 'Function';
+              }
+              else {
+                $global = explode('.', $values);
+  
+                if (sizeof($global) > 1) {
+                  
+                }
+                else {
+                  $global = trim($global[0]);
+  
+                  if (array_key_exists($global, self::$global)) {
+                    $this->loop = self::$global[$global];
+                  }
+                }
+              }
+            }
+            
+            $toReplace = $result[1];
+            $replaced = [];
+
+            for ($i = 0; $i < sizeof($this->loop); $i++) {
+              $content = $result[3];
+              $this->temp = $result[2].'.'.$i;
+              
+              $replaced[] = preg_replace_callback("#{{($toReplace)\.(.*)}}#Us", function ($matches) {
+                return '{{'.$this->temp.'.'.$matches[2].'}}';
+              }, $content);
+            }
+            
+            $this->temp = implode('', $replaced);
+
+            $newContents = preg_replace_callback("#$loopRegex#Us", function ($matches) {
+              return $this->temp;
+            }, $contents);
+
+            $contents = $newContents;
+          }
+        }
+      }
     }
 
     /**

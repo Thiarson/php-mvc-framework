@@ -14,6 +14,6 @@
     }
 
     public function index() {
-      $this->render('home.index', ['name' => 'Admin']);
+      $this->render('home.index', ['name' => 'Thiarson']);
     }
   }
