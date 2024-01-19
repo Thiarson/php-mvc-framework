@@ -16,7 +16,7 @@
      * 
      * @param bool $isLogged Filter when the middleware must be executed
      */
-    public function __construct(array $actions = [], bool $isLogged) {
+    public function __construct(array $actions, bool $isLogged) {
       $this->actions = $actions;
       $this->isLogged = $isLogged;
     }
