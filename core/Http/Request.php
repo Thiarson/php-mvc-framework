@@ -9,7 +9,10 @@
      * @return  string  
      */
     public function getPath() {
-      return $_SERVER['REQUEST_URI'];
+      preg_match_all("#(/[\w]*)\??[\w]*=?[\w]*(?:&?[\w]*=?[\w]*)*#", $_SERVER['REQUEST_URI'], $result, PREG_SET_ORDER);
+      $path = $result[0][1];
+      
+      return $path;
     }
 
     /**
@@ -60,5 +63,24 @@
       }
 
       return $body;
+    }
+
+    /**
+     * Get the specified parameter in the url.
+     * 
+     * @var string $param
+     * @return string|null
+     */
+    public function param(string $param) {
+      return $_GET[$param] ?? null;
+    }
+
+    /**
+     * Get all the parameters in the url.
+     * 
+     * @return array
+     */
+    public function all() {
+      return $_GET;
     }
   }
