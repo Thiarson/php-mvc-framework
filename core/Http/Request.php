@@ -71,8 +71,8 @@
      * @var string $param
      * @return string|null
      */
-    public function param(string $param) {
-      return $_GET[$param] ?? null;
+    public function param(string $param, $default = null) {
+      return $_GET[$param] ?? $default;
     }
 
     /**
