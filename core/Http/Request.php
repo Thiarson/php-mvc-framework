@@ -9,7 +9,7 @@
      * @return  string  
      */
     public function getPath() {
-      preg_match_all("#(/[\w]*)\??[\w]*=?[\w]*(?:&?[\w]*=?[\w]*)*#", $_SERVER['REQUEST_URI'], $result, PREG_SET_ORDER);
+      preg_match_all("#((?:/.*)+)\??[\w]*=?[\w]*(?:&?[\w]*=?[\w]*)*#", $_SERVER['REQUEST_URI'], $result, PREG_SET_ORDER);
       $path = $result[0][1];
       
       return $path;

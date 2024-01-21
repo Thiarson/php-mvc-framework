@@ -11,6 +11,13 @@
     protected static array $routes = [];
 
     /**
+     * Contains all the path patterns.
+     * 
+     * @var array
+     */
+    protected static array $patterns = [];
+
+    /**
      * Register a new GET route.
      *
      * @param  string  $path
@@ -18,6 +25,14 @@
      */
     public static function get(string $path, $action) {
       self::$routes['GET'][$path] = $action;
+
+      if (preg_match_all("#.+({.+})#U", $path)) {
+        $pattern = preg_replace_callback("#(.+)({.+})#U", function ($matches) {
+          return $matches[1].'([\w]*)';
+        }, $path);
+  
+        self::$patterns['GET'][$path] = $pattern;
+      }
     }
 
     /**
@@ -39,5 +54,14 @@
      */
     public static function getAction(string $method, string $path) {
       return self::$routes[$method][$path] ?? null;
+    }
+
+    /**
+     * Get all the patterns.
+     * 
+     * @return array
+     */
+    public static function getPatterns() {
+      return self::$patterns;
     }
   }

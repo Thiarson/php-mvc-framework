@@ -39,21 +39,47 @@
     public function resolve() {
       $path = $this->request->getPath();
       $method = $this->request->getMethod();
-      $action = Route::getAction($method, $path);
 
-      if ($action === null) {
-        throw new NotFoundException();
-      }
-      else if (is_string($action)) {
-        $action = $this->getController($action);
-        $controller = $action[0];
+      $patterns = Route::getPatterns();
+      $haveParams = false;
+      $pattern = '';
 
-        foreach ($controller->getMiddlewares() as $middleware) {
-          $middleware->execute();
+      foreach ($patterns[$method] as $key => $value) {
+        if (preg_match_all("#$value#", $path, $params, PREG_SET_ORDER)) {
+          $params = $params[0];
+          array_shift($params);
+          $pattern = $key;
+          $haveParams = true;
+          break;
         }
       }
 
-      call_user_func($action, $this->request, $this->response);
+      if ($haveParams) {
+        $action = Route::getAction($method, $pattern);
+
+        if ($action === null) {
+          throw new NotFoundException();
+        }
+        
+        call_user_func_array($action, $params);
+      }
+      else {
+        $action = Route::getAction($method, $path);
+
+        if ($action === null) {
+          throw new NotFoundException();
+        }
+        else if (is_string($action)) {
+          $action = $this->getController($action);
+          $controller = $action[0];
+  
+          foreach ($controller->getMiddlewares() as $middleware) {
+            $middleware->execute();
+          }
+        }
+  
+        call_user_func($action, $this->request, $this->response);
+      }
     }
 
     /**
