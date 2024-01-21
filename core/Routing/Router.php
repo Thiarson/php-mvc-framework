@@ -44,13 +44,16 @@
       $haveParams = false;
       $pattern = '';
 
-      foreach ($patterns[$method] as $key => $value) {
-        if (preg_match_all("#$value#", $path, $params, PREG_SET_ORDER)) {
-          $params = $params[0];
-          array_shift($params);
-          $pattern = $key;
-          $haveParams = true;
-          break;
+      if (!empty($patterns)) {
+        foreach ($patterns[$method] as $key => $value) {
+          if (preg_match_all("#$value#", $path, $params, PREG_SET_ORDER)) {
+            $params = $params[0];
+            array_shift($params);
+            array_push($params, $this->request, $this->response);
+            $pattern = $key;
+            $haveParams = true;
+            break;
+          }
         }
       }
 
