@@ -24,6 +24,8 @@
      * @param  string|array|function  $action
      */
     public static function get(string $path, $action) {
+      $patterns = new Pattern();
+
       self::$routes['GET'][$path] = $action;
 
       if (preg_match_all("#.+({.+})#U", $path)) {
@@ -33,6 +35,11 @@
   
         self::$patterns['GET'][$path] = $pattern;
       }
+      
+      $patterns->setMethod('GET');
+      $patterns->setPath($path);
+
+      return $patterns;
     }
 
     /**
@@ -63,5 +70,16 @@
      */
     public static function getPatterns() {
       return self::$patterns;
+    }
+
+    /**
+     * Modify the patterns.
+     * 
+     * @param string $method
+     * @param string $path
+     * @param string $pattern
+     */
+    public static function setPatterns(string $method, string $path, string $pattern) {
+      self::$patterns[$method][$path] = $pattern;
     }
   }
