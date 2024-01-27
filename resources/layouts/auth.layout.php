@@ -8,7 +8,7 @@
 <body>
   <div>
     <ul>
-      <li><a href="/">Landing</a></li>
+      <li><a href="{{route('home.landing')}}">Landing</a></li>
     </ul>
   </div>
   <div>

@@ -7,7 +7,7 @@
 
   Route::get('/', function () {
     View::view('landing');
-  });
+  })->name('home.landing');
 
   Route::get('/login', 'auth.login');
   Route::post('/login', 'auth.login');

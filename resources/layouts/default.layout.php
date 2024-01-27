@@ -9,9 +9,9 @@
   <div>
     <ul>
       @if isLogged()
-        <li><a href="/logout">({{session('user')}}) Logout</a></li>
+        <li><a href="{{route('auth.logout')}}">({{session('user')}}) Logout</a></li>
       @else
-        <li><a href="/login">Login</a></li>
+        <li><a href="{{route('auth.login')}}">Login</a></li>
       @endif
     </ul>
   </div>

@@ -13,3 +13,7 @@
   View::addFunction('session', function (string $param) {
     return Application::$session->get($param);
   });
+
+  View::addFunction('route', function (string $name, array $params = []) {
+    return route($name, $params);
+  });
