@@ -9,7 +9,8 @@
         },
         "files": [
             "routes/routes.php",
-            "config/view.php"
+            "config/view.php",
+            "core/Helpers/helpers.php"
         ]
     },
     "authors": [

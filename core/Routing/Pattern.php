@@ -50,6 +50,18 @@
     }
 
     /**
+     * Create a name for the specified route.
+     * 
+     * @param string $name
+     * @return Pattern
+     */
+    public function name(string $name) {
+      Route::setName($name, $this->method, $this->path);
+
+      return $this;
+    }
+
+    /**
      * Modify the method.
      * 
      * @param string $method

@@ -11,6 +11,13 @@
     protected static array $routes = [];
 
     /**
+     * Contain all the routes name.
+     * 
+     * @var array
+     */
+    protected static array $name = [];
+
+    /**
      * Contains all the path patterns.
      * 
      * @var array
@@ -27,6 +34,13 @@
       $patterns = new Pattern();
 
       self::$routes['GET'][$path] = $action;
+
+      if (is_string($action)) {
+        self::$name[$action] = [
+          'method' => 'GET',
+          'path' => $path,
+        ];
+      }
 
       if (preg_match_all("#.+({.+})#U", $path)) {
         $pattern = preg_replace_callback("#(.+)({.+})#U", function ($matches) {
@@ -81,5 +95,28 @@
      */
     public static function setPatterns(string $method, string $path, string $pattern) {
       self::$patterns[$method][$path] = $pattern;
+    }
+
+    /**
+     * Get the specified name.
+     * 
+     * @return array
+     */
+    public static function getName(string $name) {
+      return self::$name[$name];
+    }
+
+    /**
+     * Modify the name.
+     * 
+     * @param string $name
+     * @param string $method
+     * @param string $path
+     */
+    public static function setName(string $name, string $method, string $path) {
+      self::$name[$name] = [
+        'method' => $method,
+        'path' => $path,
+      ];
     }
   }

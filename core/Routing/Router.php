@@ -44,6 +44,14 @@
       $haveParams = false;
       $pattern = '';
 
+      $pathLastChar = strlen($path) - 1;
+
+      if ($path !== '/' && $path[$pathLastChar] === '/') {
+        $pathArray = str_split($path);
+        array_pop($pathArray);
+        $path = join('', $pathArray);
+      }
+
       if (!empty($patterns)) {
         foreach ($patterns[$method] as $key => $value) {
           if (preg_match_all("#$value#", $path, $params, PREG_SET_ORDER)) {
