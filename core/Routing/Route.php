@@ -23,6 +23,20 @@
      * @var array
      */
     protected static array $patterns = [];
+    
+    /**
+     * Contains the current prefix.
+     * 
+     * @var string
+     */
+    protected static string $currentPrefix = '';
+
+    /**
+     * Contains the current name.
+     * 
+     * @var string
+     */
+    protected static string $currentName = '';
 
     /**
      * Register a new GET route.
@@ -33,6 +47,13 @@
     public static function get(string $path, $action) {
       $patterns = new Pattern();
 
+      if (self::$currentPrefix !== '') {
+        if ($path !== '/')
+          $path = self::$currentPrefix.$path;
+        else
+          $path = self::$currentPrefix;
+      }
+      
       self::$routes['GET'][$path] = $action;
 
       if (is_string($action)) {
@@ -64,6 +85,20 @@
      */
     public static function post(string $path, $action) {
       self::$routes['POST'][$path] = $action;
+    }
+
+    /**
+     * Specify a prefix for some groupe of routes.
+     * 
+     * @param string $prefix
+     * @return Pattern
+     */
+    public static function prefix(string $prefix) {
+      self::$currentPrefix = $prefix;
+      $patterns = new Pattern();
+      $patterns->setIsPrefixed(true);
+
+      return $patterns;
     }
 
     /**
@@ -118,5 +153,39 @@
         'method' => $method,
         'path' => $path,
       ];
+    }
+
+    /**
+     * Get the current prefix.
+     * 
+     * @return string
+     */
+    public static function getCurrentPrefix() {
+      return self::$currentPrefix;
+    }
+
+    /**
+     * Set the current prefix into empty character.
+     */
+    public static function resetCurrentPrefix() {
+      self::$currentPrefix = '';
+    }
+
+    /**
+     * Get the current name.
+     * 
+     * @return string
+     */
+    public static function getCurrentName() {
+      return self::$currentName;
+    }
+
+    /**
+     * Set the current name into the specified value.
+     * 
+     * @param string $name
+     */
+    public static function setCurrentName(string $name) {
+      self::$currentName = $name;
     }
   }

@@ -18,6 +18,13 @@
     protected string $path;
 
     /**
+     * Define if the pattern is prefixed.
+     * 
+     * @var bool
+     */
+    protected bool $isPrefixed;
+
+    /**
      * Used as buffer in this class.
      * 
      * @var mixed
@@ -25,6 +32,9 @@
     protected $temp;
 
     public function __construct() {
+      $this->method = '';
+      $this->path = '';
+      $this->isPrefixed = false;
       $this->temp = null;
     }
 
@@ -56,7 +66,27 @@
      * @return Pattern
      */
     public function name(string $name) {
-      Route::setName($name, $this->method, $this->path);
+      if (!$this->isPrefixed) {
+        $name = Route::getCurrentName().$name;
+        Route::setName($name, $this->method, $this->path);
+      }
+      else {
+        Route::setCurrentName($name);
+      }
+
+      return $this;
+    }
+
+    /**
+     * Regroupe some routes with the same prefix.
+     * 
+     * @param callable $callback
+     * @return Pattern
+     */
+    public function group(callable $callback) {
+      call_user_func($callback);
+      Route::resetCurrentPrefix();
+      Route::setCurrentName('');
 
       return $this;
     }
@@ -77,5 +107,14 @@
      */
     public function setPath(string $path) {
       $this->path = $path;
+    }
+
+    /**
+     * Modify the state of isPrefixed.
+     * 
+     * @param bool $value
+     */
+    public function setIsPrefixed(bool $value) {
+      $this->isPrefixed = $value;
     }
   }
