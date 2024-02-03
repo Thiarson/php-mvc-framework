@@ -2,6 +2,8 @@
 
   namespace Thiarson\Framework\Database;
 
+  use Thiarson\Framework\Application;
+
   class Database {
     /**
      * Instance of PDO.
@@ -17,12 +19,13 @@
 
     protected function __construct() {
       try {
-        $dsn = $_ENV['DB_CONNECTION'].':host='.$_ENV['DB_HOST'].';port='.$_ENV['DB_PORT'].';dbname='.$_ENV['DB_DATABASE'];
+        $db = Application::$config['database'];
+        $dsn = $db['driver'].':host='.$db['host'].';port='.$db['port'].';dbname='.$db['database'];
         $options = array(
           \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
         );
 
-        $this->pdo = new \PDO($dsn, $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $options);
+        $this->pdo = new \PDO($dsn, $db['username'], $db['password'], $options);
       }
       catch (\PDOException $e) {
         echo $e->getMessage();

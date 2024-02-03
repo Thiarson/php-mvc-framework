@@ -15,6 +15,11 @@
   // Load all the configuration in the .env file
   $dotenv = Dotenv\Dotenv::createImmutable($config['rootDir']);
   $dotenv->load();
+
+  // Load the database information in the configuration file
+  $db = require __DIR__.'/../config/database.php';
+
+  $config['database'] = $db['connections'][env('DB_CONNECTION')];
   
   $app = new Application($config);
   
